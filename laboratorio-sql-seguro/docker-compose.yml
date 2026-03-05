@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  web_segura:
+    build: .
+    container_name: laboratorio-sql_web_segura
+    network_mode: "host" # Esto permite que la App vea a la DB en localhost
+    environment:
+      - ASPNETCORE_URLS=http://+:8081 # Forzamos el puerto 8081 internamente
+      - ASPNETCORE_ENVIRONMENT=Development

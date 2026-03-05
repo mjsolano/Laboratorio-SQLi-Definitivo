@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  # Contenedor 1: Base de Datos
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Password_Fuerte_123!
+    ports:
+      - "1434:1433"
+
+  # Contenedor 2: Aplicación Web
+  web:
+    build: .
+    ports:
+      - "8080:8080" # Mapea el puerto 80 de AWS al 8080 del contenedor
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=db;Database=master;User Id=sa;Password=Password_Fuerte_123!;TrustServerCertificate=True;
+    depends_on:
+      - db
